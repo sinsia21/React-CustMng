@@ -21,13 +21,37 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
+const multer = require('multer');
+const upload = multer({dest: './upload'})
+
 app.get('/api/customers', (req, res) => {
     connection.query(
-        "SELECT * FROM customer",
+        "select id, image, name, birthday, gender, job, rmk, date_format(create_dttm, '%Y-%m-%d') as create_dttm, date_format(update_dttm, '%Y-%m-%d') as update_dttm from customer",
         (err, rows, fields) => {
             res.send(rows);
         }
     );
 });
+
+app.use('/image', express.static('./upload'));
+
+app.post('/api/customers', upload.single('image'), (req, res) => {
+    let sql = 'INSERT INTO CUSTOMER VALUES (NULL, ?, ?, ?, ?, ?, ?, now(), now())';
+    let image = '/image/' + req.file.filename;
+    let name = req.body.name;
+    let birthday = req.body.birthday;
+    let gender = req.body.gender;
+    let job = req.body.job;
+    let rmk = req.body.rmk;
+    let params = [image, name, birthday, gender, job, rmk];
+    connection.query(sql, params, 
+        (err, rows, fields) => {
+            res.send(rows);
+            console.log(err);
+            console.log(rows);
+        }
+    );
+
+})
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
