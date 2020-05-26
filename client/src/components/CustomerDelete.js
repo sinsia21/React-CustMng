@@ -43,7 +43,7 @@ class CustomerDelete extends React.Component {
                         삭제 경고
                     </DialogTitle>
                     <DialogContent>
-                        <Typography gutterBottm>
+                        <Typography gutterBottom>
                             선택한 고객 정보가 삭제됩니다.
                         </Typography>
                     </DialogContent>
