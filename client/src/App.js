@@ -81,12 +81,13 @@ class App extends Component {
               <TableCell>비고</TableCell>
               <TableCell>입력일자</TableCell>
               <TableCell>수정일자</TableCell>
+              <TableCell>설정</TableCell>
             </TableRow>
             </TableHead>             
             <TableBody>
             {
               this.state.customers ? this.state.customers.map(c=> {
-                return (<Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} rmk={c.rmk} create_dttm={c.create_dttm} update_dttm={c.update_dttm}/>);
+                return (<Customer stateRefresh={this.stateRefresh} key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} rmk={c.rmk} create_dttm={c.create_dttm} update_dttm={c.update_dttm}/>);
               }) :
               <TableRow>
                 <TableCell colSpan="6" align="center">
